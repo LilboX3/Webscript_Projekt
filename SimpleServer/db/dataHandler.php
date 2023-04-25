@@ -46,10 +46,18 @@ class DataHandler
         $result = array();
         $sql = "SELECT TerminID FROM appointment WHERE Title=?";
         $stmt = $this->db_obj->prepare($sql); 
-        $stmt->bind_param($title, $Title);
+        $stmt->bind_param("s", $title);
         $stmt->execute();
         $result = $stmt->get_result(); // get the mysqli result
-        $terminid = $result->fetch_assoc(); // fetch data  
+        $terminid = $result->fetch_assoc(); // fetch data
+
+        $id = $terminid["TerminID"];
+        $sql = "SELECT * FROM termine WHERE ID =?";
+        $stmt = $this->db_obj->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 
     //TODO: get data from database instead
