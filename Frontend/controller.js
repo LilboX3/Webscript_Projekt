@@ -15,14 +15,20 @@ function loadAppointments() {
         dataType: "json",
         success: function (response) {
             console.log(response);
-            
+
             for(let i=0; i<response.length;i++){
                 var txt2 = $("<details></details>");
                 for(let j=0; j<6; j++){
                     if(j==0){ //Titel als Summary anzeigen
                         var txt = $("<summary></summary>").text(response[i][j]);
                         $("#appointments ol").append(txt);
-                        
+                        if(inPast(response[i][5])){
+                            let date = new Date(response[i][5]);
+                            let line = $("<p></p>").text("Das Appointment vom "+date+" ist bereits abgelaufen.");
+                            txt2.append(line);
+                            txt.append(txt2);
+                            break;
+                        }
                     } else { //Weitere Infos als Details anzeigen
                     var line = $("<p></p>").text(response[i][j]);
                      txt2.append(line);
@@ -42,6 +48,19 @@ function loadAppointments() {
         }
         
     });
+}
+
+function inPast($date){
+    var selectedDate = new Date($date);
+    var now = new Date();
+    now.setHours(0,0,0,0);
+    if (selectedDate < now) {
+      console.log("Selected date is in the past");
+      return true;
+    } else {
+      console.log("Selected date is NOT in the past");
+      return false;
+    }
 }
 
 function vote($title, $this){
