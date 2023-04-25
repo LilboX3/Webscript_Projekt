@@ -12,7 +12,6 @@ class Appointment {
         $this->description=$description;
         $this->duration=$duration;
         $this->dates=$dates;
-
       }
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 include("businesslogic/simpleLogic.php");
 
+//TODO; anpassen, dass es für alle Frontends funktioniert (?) how
 $param = "";
 $method = "";
 

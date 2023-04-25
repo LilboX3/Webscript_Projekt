@@ -1,6 +1,7 @@
 <?php
 include("db/dataHandler.php");
 
+//TODO:
 class SimpleLogic
 {
     private $dh;
@@ -12,14 +13,14 @@ class SimpleLogic
     function handleRequest($method, $param)
     {
         switch ($method) {
-            case "queryPersons":
-                $res = $this->dh->queryPersons();
+            case "queryAppointments":
+                $res = $this->dh->queryAppointments();
                 break;
-            case "queryPersonById":
-                $res = $this->dh->queryPersonById($param);
+            case "getAppointment":
+                $res = $this->dh->getAppointment($param);
                 break;
-            case "queryPersonByName":
-                $res = $this->dh->queryPersonByName($param);
+            case "getDates":
+                $res = $this->dh->getDates($param);
                 break;
             default:
                 $res = null;
