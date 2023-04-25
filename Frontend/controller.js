@@ -21,7 +21,6 @@ function loadAppointments() {
                 for(let j=0; j<6; j++){
                     if(j==0){ //Titel als Summary anzeigen
                         var txt = $("<summary></summary>").text(response[i][j]);
-                        txt.attr("id", response[i][0]);
                         $("#appointments ol").append(txt);
                         
                     } else { //Weitere Infos als Details anzeigen
@@ -30,6 +29,7 @@ function loadAppointments() {
                      txt.append(txt2);
                     }
             }
+            //Button anlegen, mit dem man alle Termine anzeigen kann
             var button = $("<button></button>").text("Termin voten");
                         button.attr("onclick", "vote('"+response[i][0]+"',this)");
                         $("#appointments ol").append(button).append($("<br>"));
