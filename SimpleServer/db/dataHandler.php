@@ -49,7 +49,7 @@ class DataHandler
         $stmt->bind_param("s", $title);
         $stmt->execute();
         $result = $stmt->get_result(); // get the mysqli result
-        $terminid = $result->fetch_assoc(); // fetch data
+        $terminid = $result->fetch_assoc(); //Hol dir die ID von den Terminen, die zum appointment gehören
 
         $id = $terminid["TerminID"];
         $sql = "SELECT * FROM termine WHERE ID =?";
@@ -58,6 +58,10 @@ class DataHandler
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc();
+    }
+
+    public function writeVotes($dateArray){
+        
     }
 
     //TODO: get data from database instead
