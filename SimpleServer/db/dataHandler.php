@@ -60,7 +60,7 @@ class DataHandler
         return $result->fetch_assoc();
     }
 
-    public function writeVotes($dateArray){
+    public function writeUser($dateArray){
         
     }
 

@@ -4,6 +4,12 @@ $(document).ready(function () {
     loadAppointments();
 });
 
+$(document).on('click','#insertdata',function(){
+    $.ajax({
+        //TODO: vote 
+    })
+});
+
 //Test mit Appointments anzeigen
 function loadAppointments() {
     console.log("loading appointments");
@@ -38,6 +44,7 @@ function loadAppointments() {
             //Button anlegen, mit dem man alle Termine anzeigen kann
             var button = $("<button></button>").text("Termin voten");
                         button.attr("onclick", "vote('"+response[i][0]+"',this)");
+                        button.addClass("vote-button");
                         $("#appointments ol").append(button).append($("<br>"));
             $("#appointments ol").append("------------------------");
         }
@@ -74,9 +81,13 @@ function vote($title, $this){
         success: function(response){
             console.log(response);
 
+            
             $this.remove();
-            var header = $("<h3></h3>").text("Ausgewähltes Appointment:");
+            let header = $("<h3></h3>").text("Ausgewähltes Appointment:");
             $("#current").append(header);
+            let nameInput = $("<input type='text'>");
+            nameInput.attr("value", "Ihr Name");
+            $("#current").append(nameInput);
 
             //Objekt durchgehn und alle Datume anzeigen
             let i = 0;
@@ -85,7 +96,7 @@ function vote($title, $this){
                 if(key!="ID"){ //ID nicht ausgeben
                     let txt = $("<p></p>").text(response[key]);
                     //checkbox, id ist die wievielte Zeile es ist, class ist zu welche ID es gehört
-                    let check =  $("<input />", { type: "checkbox", id: "'"+i+"'" , class:"'"+response["ID"]+"'"}).appendTo(txt);
+                    let check =  $("<input type='checkbox'/>").appendTo(txt);
                 $("#current").append(txt);
                 }
                 console.log(key, response[key]);
@@ -93,7 +104,8 @@ function vote($title, $this){
                 ++i;
               });
               //Button machen, mit dem man Votes in die datenbank schreibt
-              let butt = $("<button></button>").text("Vote abgeben").appendTo($("#current"));
+              let butt = $("<button></button>").text("Vote abgeben").attr("id", "insertdata").appendTo($("#current"));
+
               
         },
         error: function(response){
@@ -101,3 +113,7 @@ function vote($title, $this){
         }
     })
 }
+
+
+    
+

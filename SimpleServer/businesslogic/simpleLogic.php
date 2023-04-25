@@ -22,6 +22,9 @@ class SimpleLogic
             case "getDates":
                 $res = $this->dh->getDates($param);
                 break;
+            case "writeUser":
+                $res = $this->dh->writeUser($param);
+                break;
             default:
                 $res = null;
                 break;
