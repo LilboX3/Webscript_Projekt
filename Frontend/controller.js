@@ -60,14 +60,21 @@ function vote($title, $this){
             $("#current").append(header);
 
             //Objekt durchgehn und alle Datume anzeigen
+            let i = 0;
             Object.keys(response).forEach(key => {
-                if(key!="ID"){
-                    var txt = $("<p></p>").text(response[key]);
+                if(response[key]!=null){ //nur Termine die es gibt auslesen
+                if(key!="ID"){ //ID nicht ausgeben
+                    let txt = $("<p></p>").text(response[key]);
+                    //checkbox, id ist die wievielte Zeile es ist, class ist zu welche ID es gehört
+                    let check =  $("<input />", { type: "checkbox", id: "'"+i+"'" , class:"'"+response["ID"]+"'"}).appendTo(txt);
                 $("#current").append(txt);
+                }
                 console.log(key, response[key]);
                 }
-                
+                ++i;
               });
+              //Button machen, mit dem man Votes in die datenbank schreibt
+              let butt = $("<button></button>").text("Vote abgeben").appendTo($("#current"));
               
         },
         error: function(response){
