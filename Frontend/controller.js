@@ -334,6 +334,11 @@ function insertAppointment(terminID){
         dataType: "json",
         async: false,
         success: function(response){
+            let res = $("<p></p>").text(response);
+            $("#createAppointment").append(res);
+            setTimeout(() => {
+                document.location.reload();
+              }, 3000);
             console.log(response);
         }, 
         error: function(response){
