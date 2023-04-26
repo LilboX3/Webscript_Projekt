@@ -67,7 +67,8 @@ function loadAppointments() {
             let votebutton = true; //wenn abgelaufen: kein button mehr
 
             for(let i=0; i<response.length;i++){
-                var txt2 = $("<details></details>");
+                var txt2 = $("<details></details>").addClass("appointment-details");
+                console.log(getUserInput(response[i][1]));
                 for(let j=0; j<6; j++){
                     if(j==0){ //Titel als Summary anzeigen
                         var txt = $("<summary></summary>").text(response[i][j]);
@@ -101,6 +102,22 @@ function loadAppointments() {
         }
         
     });
+}
+
+function getUserInput($id){
+    $.ajax({
+        type: "GET",
+        url: "../SimpleServer/serviceHandler.php",
+        cache: false,
+        data: {method: "userData", param: $id},
+        dataType: "json",
+        success: function(response){
+            return response;
+        },
+        error: function(response){
+            console.log(response);
+        }
+    })
 }
 
 //überprüfen, ob Ablaufdatum bereits eingetreten ist

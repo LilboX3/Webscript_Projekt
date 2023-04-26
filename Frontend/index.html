@@ -20,7 +20,7 @@
         <div class="col-2">
 
         </div>
-        <div class="col-8">
+        <div class="col-8" id="appointments-container">
         <div id="appointments">
             <ol>
 
@@ -28,10 +28,10 @@
         </div>
 
         <div id="current" class="appointment-container active">
-            <h5 class="active-appointment" id="close">close</h5>
+            <h5 class="active-appointment" id="close">✗</h5>
             <h3 class="active-appointment">Ausgewähltes Appointment:</h3>
-            <input id="username" type="text" placeholder="Name"> <br>
-            <textarea id="usercomment" rows="4" cols="22" placeholder="Kommentar"></textarea>
+            <input id="username" type="text" class="text-box" placeholder="Name...♡"> <br>
+            <textarea id="usercomment" class="text-box" rows="4" cols="22" placeholder="Kommentar...♡"></textarea>
            
         </div>
         
@@ -40,23 +40,23 @@
         <div id="createAppointment" class="appointment-container">
             <h3 class="active-appointment">Appointment erstellen</h3>
 
-            <label for="Titel">Titel des Appointments: </label><br>
-            <input type="text" id="appTitle" name="Titel"> <br>
+            <label for="Titel" class="box-label">Titel des Appointments: </label><br>
+            <input type="text" class="text-box" id="appTitle" name="Titel"> <br>
 
             <label for="Ort">Ort des Appointments: </label> <br>
-            <input type="text" id="appLocation" name="Ort"> <br>
+            <input type="text" class="text-box" id="appLocation" name="Ort"> <br>
 
             <label for="Beschreibung">Kurze Beschreibung:</label><br>
-            <input type="text" id="appDescription" name="Beschreibung"> <br>
+            <input type="text" class="text-box" id="appDescription" name="Beschreibung"> <br>
 
             <label for="Dauer">Dauer (Uhrzeit oder in Stunden):</label><br>
-            <input type="text" id="appDuration" name="Dauer"><br>
+            <input type="text" class="text-box" id="appDuration" name="Dauer"><br>
 
             <label for="Ablauf">Ablaufdatum (gültig bis):</label><br>
-            <input type="datetime-local" id="appExpiry" name="Ablauf"><br>
+            <input type="datetime-local" id="appExpiry" class="ablauf-datum" name="Ablauf"><br>
 
             <label for="Termine">Anzahl der Termine: </label><br>
-            <input type="number" min="1" max="5" id="dateNr" name="Termine">
+            <input type="number" min="1" max="5" id="dateNr" name="Termine" class="date-Nr">
             <button class="cute-button" onclick="">Appointment erstellen</button>
 
 

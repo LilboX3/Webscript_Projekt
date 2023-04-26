@@ -89,12 +89,14 @@ class DataHandler
     //User Daten aus der Datenbank auslesen
     public function userData($appID){
         $result = array();
-        $sql = "SELECT TerminID FROM appointment WHERE Title=?";
+        $sql = "SELECT * FROM user WHERE appointmentID=?";
         $stmt = $this->db_obj->prepare($sql); 
-        $stmt->bind_param("s", $title);
+        $stmt->bind_param("i", $appID);
         $stmt->execute();
         $result = $stmt->get_result();
-        $terminid = $result->fetch_assoc();
+        $userData = $result->fetch_assoc();
+
+        return $userData;
 
     }
 
