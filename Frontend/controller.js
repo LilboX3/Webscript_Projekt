@@ -74,8 +74,10 @@ function loadAppointments() {
             console.log(response);
             let votebutton = true; //wenn abgelaufen: kein button mehr
             let userArray;
-
+            
             for(let i=0; i<response.length;i++){
+                currentUserdata = null;
+                votebutton = true;
                 var txt2 = $("<details></details>").addClass("appointment-details");
 
                 //user daten ausgeben, wenn ablaufdatum noch nicht erreicht
