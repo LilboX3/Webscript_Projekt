@@ -173,7 +173,7 @@ function loadAppointments() {
     });
 }
 
-
+//Name und kommentar von user aus datenbank holen
 function getUserInput($id){
     $.ajax({
         type: "GET",
@@ -277,6 +277,7 @@ function makeAppointment(){
     pickDates(noDates);
 }
 
+//Ausgewählte Anzahl an Termin-Picker ausgeben
 function pickDates($noDates){
     $("#createbutton").hide();
     let count = $noDates;
@@ -323,7 +324,7 @@ $(document).on('click', '#newcreator', async function(){
     insertAppointment(dateInsert);
 });
 
-//in die Datenbank schreiben
+//neues Appointment in die Datenbank schreiben  mit werten aus inputfeldern
 function insertAppointment(terminID){
     var insertAppt = [null, null, null, null, null, null];
     insertAppt[0] = $("#appTitle").val();
