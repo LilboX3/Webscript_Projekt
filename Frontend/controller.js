@@ -8,6 +8,14 @@ $(document).ready(function () {
     $("#createAppointment").hide();
 });
 
+//Appointment Ersteller öffnen, rest schließen!
+$(document).on('click', '#newAppointment', function(){
+    $("#current").hide();
+    $("#appointments").hide();
+    $("#newAppointment").hide();
+    $("#createAppointment").show();
+});
+
 //User Input in die Datenbank schreiben
 $(document).on('click','#insertdata',function(){
     $("#current").hide();
