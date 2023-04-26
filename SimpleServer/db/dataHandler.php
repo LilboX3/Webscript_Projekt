@@ -62,6 +62,10 @@ class DataHandler
 
     //User Daten in die Datenbank eintragen
     public function writeUser($dateArray){
+        if($dateArray[2]==""&&$dateArray[3]==""){ //Wenn nichts eingegeben wurde
+            return null;
+        }
+
         $appTitle = $dateArray[1];
         $sql1 = "SELECT ID FROM appointment WHERE Title=?";
         $stmt = $this->db_obj->prepare($sql1); 
