@@ -47,7 +47,10 @@ $(document).on('click','#insertdata',function(){
         error: function(response){
             console.log(response);
         }
-    })
+    });
+    setTimeout(() => {
+        document.location.reload();
+      }, 3000);
 });
 
 //bei klick auf close button die Termine wieder schließen
