@@ -2,6 +2,7 @@
 $(document).ready(function () {
     console.log("doc ready");
     loadAppointments();
+    $("#current").hide();
 });
 
 $(document).on('click','#insertdata',function(){
@@ -46,7 +47,6 @@ function loadAppointments() {
                         button.attr("onclick", "vote('"+response[i][0]+"',this)");
                         button.addClass("vote-button");
                         $("#appointments ol").append(button).append($("<br>"));
-            $("#appointments ol").append("------------------------");
         }
     },
         error: function(response){
@@ -72,6 +72,7 @@ function inPast($date){
 
 function vote($title, $this){
     console.log("starting dates vote");
+    $("#current").show();
     $.ajax({
         type: "GET",
         url: "../SimpleServer/serviceHandler.php",
@@ -83,11 +84,6 @@ function vote($title, $this){
 
             
             $this.remove();
-            let header = $("<h3></h3>").text("Ausgewähltes Appointment:");
-            $("#current").append(header);
-            let nameInput = $("<input type='text'>");
-            nameInput.attr("value", "Ihr Name");
-            $("#current").append(nameInput);
 
             //Objekt durchgehn und alle Datume anzeigen
             let i = 0;
@@ -96,7 +92,7 @@ function vote($title, $this){
                 if(key!="ID"){ //ID nicht ausgeben
                     let txt = $("<p></p>").text(response[key]);
                     //checkbox, id ist die wievielte Zeile es ist, class ist zu welche ID es gehört
-                    let check =  $("<input type='checkbox'/>").appendTo(txt);
+                    let check =  $("<input type='checkbox'/>").addClass("checkbox").appendTo(txt);
                 $("#current").append(txt);
                 }
                 console.log(key, response[key]);
@@ -104,7 +100,7 @@ function vote($title, $this){
                 ++i;
               });
               //Button machen, mit dem man Votes in die datenbank schreibt
-              let butt = $("<button></button>").text("Vote abgeben").attr("id", "insertdata").appendTo($("#current"));
+              let butt = $("<button></button>").addClass("cute-button").text("Vote abgeben").attr("id", "insertdata").appendTo($("#current"));
 
               
         },

@@ -1,0 +1,177 @@
+/* Main body styles */
+body {
+    background-image: url('img/21d48067dcc5038b80795e38426bc091.jpg');
+    background-size: cover;
+    color: #ff7faa;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+/* Heading styles */
+h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 48px;
+    color: #ff7faa;
+    text-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
+  }
+/* Main Container*/
+#appointments-container {
+    background-color: #ffc3cc;
+    border: 2px solid #ff7faa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
+}
+/* Appointments styles */
+#appointments summary {
+    background-color: #ffc3cc;
+    border: 2px solid #ff7faa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
+}
+/* Active Appointment Text*/
+h3.active-appointment {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    color: #ff7faa;
+    text-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
+  }  
+#appointments details {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #d98fb2;
+}
+
+#appointments details p {
+    color: blue;
+}
+
+/* input feld */
+input {
+  margin-bottom:1%;
+}
+
+
+
+
+/* termin writing */
+#current p {
+    color: black;
+    margin-top: 0.5rem;
+}
+.appointment-container {
+    background-color: #ffc3cc;
+    border: 2px solid #ff7faa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
+}
+
+
+/* Button style */
+button.vote-button {
+    font-weight: 600;
+    color: #382b22;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    background: #fff0f0;
+    border: 2px solid #b18597;
+    border-radius: 0.5em;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+    font-size: 0.75em;
+  }
+  
+  button.vote-button::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f9c4d2;
+    border-radius: inherit;
+    box-shadow: 0 0 0 2px #b18597, 0 0.375em 0 0 #ffe3e2;
+    transform: translate3d(0, 0.5em, -1em);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  button.cute-button {
+    font-weight: 600;
+    color: #382b22;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    background: #fff0f0;
+    border: 2px solid #b18597;
+    border-radius: 0.5em;
+    transition: transform 0.15s;
+    transform-style: preserve-3d;
+    font-size: 0.75em;
+  }
+  
+  button.cute-button::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f9c4d2;
+    border-radius: inherit;
+    box-shadow: 0 0 0 2px #b18597, 0 0.375em 0 0 #ffe3e2;
+    transform: translate3d(0, 0.5em, -1em);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  button.cute-button:hover {
+    background: #ffe9e9;
+    transform: translate(0, 0.25em);
+  }
+  
+  button.cute-button:hover::before {
+    box-shadow: 0 0 0 2px #b18597, 0 0.25em 0 0 #ffe3e2;
+    transform: translate3d(0, 0.375em, -1em);
+  }
+  
+  button.cute-button:active {
+    background: #ffe9e9;
+    transform: translate(0em, 0.5em);
+  }
+  
+  button.cute-button:active::before {
+    box-shadow: 0 0 0 2px #b18597, 0 0 #ffe3e2;
+    transform: translate3d(0, 0, -1em);
+  }
+  
+  input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ff7faa;
+    border-radius: 3px;
+    position: relative;
+    top: 2px;
+  }
+  
+  input[type="checkbox"]:checked:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: white;
+}
