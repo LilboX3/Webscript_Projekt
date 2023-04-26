@@ -88,16 +88,22 @@ class DataHandler
 
     //User Daten aus der Datenbank auslesen
     public function userData($appID){
+        if($appID==null){
+            return "bogus";
+        }
         $result = array();
+        $appID = intval($appID);
         $sql = "SELECT * FROM user WHERE appointmentID=?";
         $stmt = $this->db_obj->prepare($sql); 
         $stmt->bind_param("i", $appID);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $userData = $result->fetch_assoc();
+        $helper = $stmt->get_result();
 
-        return $userData;
+        while ($row = $helper->fetch_array()) {
+            array_push($result, $row);
+        }
 
+        return $result;
     }
 
     //TODO: get data from database instead

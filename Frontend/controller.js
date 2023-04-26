@@ -1,5 +1,6 @@
 var currentdate; //know the dates to save in
 var currentappointment; //the current appointment
+var currentUserdata; //load comments with name
 //Starting point for JQuery init
 $(document).ready(function () {
     console.log("doc ready");
@@ -65,12 +66,17 @@ function loadAppointments() {
         success: function (response) {
             console.log(response);
             let votebutton = true; //wenn abgelaufen: kein button mehr
+            let userArray;
 
             for(let i=0; i<response.length;i++){
                 var txt2 = $("<details></details>").addClass("appointment-details");
-                console.log(getUserInput(response[i][1]));
+                //user daten ausgeben, wenn ablaufdatum noch nicht erreicht
+                if(!inPast(response[i][5])){
+                    getUserInput(response[i][1]);
+                }
                 for(let j=0; j<6; j++){
                     if(j==0){ //Titel als Summary anzeigen
+
                         var txt = $("<summary></summary>").text(response[i][j]);
                         $("#appointments ol").append(txt);
                         if(inPast(response[i][5])){
@@ -87,6 +93,18 @@ function loadAppointments() {
                      txt.append(txt2);
                     }
             }
+            //wenn es user kommentare usw gibt, diese ausgeben
+            userArray = currentUserdata;
+                        if(userArray!=null){
+                            console.log("ich bin ein dummer hurensohn");
+                            for(let i=0; i<userArray.length;i++){
+                                let name = $("<p></p>").text("Von: "+userArray[i]["name"]);
+                                let comment = $("<p></p>").text("Kommentar: "+userArray[i]["comment"]);
+                                txt2.append(name);
+                                txt2.append(comment);
+                            }
+                        }
+                    
             if(votebutton){
             //Button anlegen, mit dem man alle Termine anzeigen kann
             var button = $("<button></button>").text("Termin voten");
@@ -95,6 +113,7 @@ function loadAppointments() {
                         $("#appointments ol").append(button).append($("<br>"));
             }
         }
+        console.log(currentUserdata);
     },
         error: function(response){
             console.log("didnt work");
@@ -111,11 +130,15 @@ function getUserInput($id){
         cache: false,
         data: {method: "userData", param: $id},
         dataType: "json",
+        async: false,
         success: function(response){
+            console.log(response);
+            currentUserdata = response;
             return response;
         },
         error: function(response){
             console.log(response);
+            return response;
         }
     })
 }
