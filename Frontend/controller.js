@@ -14,6 +14,7 @@ $(document).on('click', '#newAppointment', function(){
     $("#current").hide();
     $("#appointments").hide();
     $("#newAppointment").hide();
+    $("#dateNr").show();
     $("#createAppointment").show();
 });
 
@@ -96,7 +97,6 @@ function loadAppointments() {
             //wenn es user kommentare usw gibt, diese ausgeben
             userArray = currentUserdata;
                         if(userArray!=null){
-                            console.log("ich bin ein dummer hurensohn");
                             for(let i=0; i<userArray.length;i++){
                                 let name = $("<p></p>").text("Von: "+userArray[i]["name"]);
                                 let comment = $("<p></p>").text("Kommentar: "+userArray[i]["comment"]);
@@ -201,6 +201,21 @@ function vote($title){
             console.log(response);
         }
     })
+}
+
+//Appointment Ersteller schließen, rest öffnen!
+$(document).on('click', '#closeCreator', function(){
+    //$("#current").show();
+    $("#appointments").show();
+    $("#newAppointment").show();
+    $("#createAppointment").hide();
+});
+
+
+
+function makeAppointment(){
+    let noDates = $("#dateNr").val();
+    $("#dateNr").hide();
 }
 
 

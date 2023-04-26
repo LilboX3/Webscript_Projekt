@@ -38,6 +38,8 @@
         <button id="newAppointment" class="cute-button">Neues Appointment anlegen</button>
 
         <div id="createAppointment" class="appointment-container">
+
+            <h5 class="active-appointment" id="closeCreator">✗</h5>
             <h3 class="active-appointment">Appointment erstellen</h3>
 
             <label for="Titel" class="box-label">Titel des Appointments: </label><br>
@@ -57,7 +59,7 @@
 
             <label for="Termine">Anzahl der Termine: </label><br>
             <input type="number" min="1" max="5" id="dateNr" name="Termine" class="date-Nr">
-            <button class="cute-button" onclick="">Appointment erstellen</button>
+            <button class="cute-button" onclick="makeAppointment()">Appointment erstellen</button>
 
 
         </div>
