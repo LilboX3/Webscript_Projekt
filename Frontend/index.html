@@ -36,6 +36,32 @@
         </div>
         
         <button id="newAppointment" class="cute-button">Neues Appointment anlegen</button>
+
+        <div id="createAppointment" class="appointment-container">
+            <h3 class="active-appointment">Appointment erstellen</h3>
+
+            <label for="Titel">Titel des Appointments: </label><br>
+            <input type="text" id="appTitle" name="Titel"> <br>
+
+            <label for="Ort">Ort des Appointments: </label> <br>
+            <input type="text" id="appLocation" name="Ort"> <br>
+
+            <label for="Beschreibung">Kurze Beschreibung:</label><br>
+            <input type="text" id="appDescription" name="Beschreibung"> <br>
+
+            <label for="Dauer">Dauer (Uhrzeit oder in Stunden):</label><br>
+            <input type="text" id="appDuration" name="Dauer"><br>
+
+            <label for="Ablauf">Ablaufdatum (gültig bis):</label><br>
+            <input type="datetime-local" id="appExpiry" name="Ablauf"><br>
+
+            <label for="Termine">Anzahl der Termine: </label><br>
+            <input type="number" min="1" max="5" id="dateNr" name="Termine">
+            <button class="cute-button" onclick="">Appointment erstellen</button>
+
+
+        </div>
+
         </div>
         
         <div class="col-2">

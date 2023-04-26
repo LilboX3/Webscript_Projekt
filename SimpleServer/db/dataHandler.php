@@ -62,7 +62,7 @@ class DataHandler
 
     //User Daten in die Datenbank eintragen
     public function writeUser($dateArray){
-        if($dateArray[2]==""&&$dateArray[3]==""){ //Wenn nichts eingegeben wurde
+        if($dateArray[2]==""){ //Wenn kein name eingetragen wurde
             return null;
         }
 

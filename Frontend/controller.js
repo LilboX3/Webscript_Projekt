@@ -5,8 +5,10 @@ $(document).ready(function () {
     console.log("doc ready");
     loadAppointments();
     $("#current").hide();
+    $("#createAppointment").hide();
 });
 
+//User Input in die Datenbank schreiben
 $(document).on('click','#insertdata',function(){
     $("#current").hide();
     $("#current .checkbox").remove();
@@ -23,6 +25,10 @@ $(document).on('click','#insertdata',function(){
         dataType: "json",
         success: function(response){
             console.log(response);
+            let res = $("<p></p>").text(response);
+            res.attr("id", "userResponse");
+            res.css("margin-top", "2%");
+            $(".col-8").append(res);
         },
         error: function(response){
             console.log(response);
@@ -30,6 +36,7 @@ $(document).on('click','#insertdata',function(){
     })
 });
 
+//bei klick auf close button die Termine wieder schließen
 $(document).on("click", "#close", function(){
     $("#current").hide();
     $("#current .checkbox").remove();
@@ -88,6 +95,7 @@ function loadAppointments() {
     });
 }
 
+//überprüfen, ob Ablaufdatum bereits eingetreten ist
 function inPast($date){
     var selectedDate = new Date($date);
     var now = new Date();
@@ -101,8 +109,13 @@ function inPast($date){
     }
 }
 
+//Termine zu diesem Appointment anzeigen und Input nehmen
 function vote($title){
     console.log("starting dates vote");
+    $("#userResponse").remove();
+    //inputfelder wieder leeren
+    $('#username').val('');  
+    $('#usercomment').val(''); 
     $("#current").show();
 
     $.ajax({
@@ -113,11 +126,12 @@ function vote($title){
         dataType: "json",
         success: function(response){
             console.log(response);
-
             //Objekt durchgehn und alle Datume anzeigen
             let i = 0;
             currentdate = response["ID"];
             currentappointment = $title;
+            $("#current h3").text(currentappointment);
+
             Object.keys(response).forEach(key => {
                 if(response[key]!=null){ //nur Termine die es gibt auslesen
                 if(key!="ID"){ //ID nicht ausgeben
