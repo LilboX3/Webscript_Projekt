@@ -28,6 +28,12 @@ class SimpleLogic
             case "userData":
                 $res = $this->dh->userData($param);
                 break;
+            case "insertDates":
+                $res = $this->dh->insertDates($param);
+                break;
+            case "insertAppointment":
+                $res = $this->dh->insertAppointment($param);
+                break;
             default:
                 $res = null;
                 break;

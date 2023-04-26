@@ -1,12 +1,14 @@
 var currentdate; //know the dates to save in
 var currentappointment; //the current appointment
 var currentUserdata; //load comments with name
+var dateInsert; //terminID to insert
 //Starting point for JQuery init
 $(document).ready(function () {
     console.log("doc ready");
     loadAppointments();
     $("#current").hide();
     $("#createAppointment").hide();
+    $("#createbutton").hide();
 });
 
 //Appointment Ersteller öffnen, rest schließen!
@@ -16,10 +18,12 @@ $(document).on('click', '#newAppointment', function(){
     $("#newAppointment").hide();
     $("#dateNr").show();
     $("#createAppointment").show();
+    $("#createbutton").show();
 });
 
 //User Input in die Datenbank schreiben
 $(document).on('click','#insertdata',function(){
+    $(".vote-button").removeAttr("disabled");
     $("#current").hide();
     $("#current .checkbox").remove();
     $("#current p").remove();
@@ -48,6 +52,7 @@ $(document).on('click','#insertdata',function(){
 
 //bei klick auf close button die Termine wieder schließen
 $(document).on("click", "#close", function(){
+    $(".vote-button").removeAttr("disabled");
     $("#current").hide();
     $("#current .checkbox").remove();
     $("#current p").remove();
@@ -55,6 +60,7 @@ $(document).on("click", "#close", function(){
 
 })
 
+//Test mit Appointments anzeigen
 //Test mit Appointments anzeigen
 function loadAppointments() {
     console.log("loading appointments");
@@ -71,39 +77,78 @@ function loadAppointments() {
 
             for(let i=0; i<response.length;i++){
                 var txt2 = $("<details></details>").addClass("appointment-details");
+
                 //user daten ausgeben, wenn ablaufdatum noch nicht erreicht
                 if(!inPast(response[i][5])){
                     getUserInput(response[i][1]);
                 }
-                for(let j=0; j<6; j++){
-                    if(j==0){ //Titel als Summary anzeigen
 
-                        var txt = $("<summary></summary>").text(response[i][j]);
-                        $("#appointments ol").append(txt);
+                // Title
+                var txt = $("<summary></summary>").text(response[i][0]);
+                $("#appointments ol").append(txt);
+
+                for(let j=1; j<7; j++){
+                    var line = $("<p></p>");
+                    // ID
+                    if(j==1){
+                        line.text();
+                    }
+                    // Location
+                    else if(j==2){
+                        line.text("Ort: ");
+                        var responseText = $("<span>").text(response[i][j]).addClass("location-class");
+                        line.append(responseText);
+                    }
+                    // Description
+                    else if(j==3){
+                        line.text("Beschreibung: ");
+                        var responseText = $("<span>").text(response[i][j]).addClass("description-class");
+                        line.append(responseText);
+                    }
+                    // Duration
+                    else if(j==4){
+                        line.text("Dauer: ");
+                        var responseText = $("<span>").text(response[i][j]).addClass("duration-class");
+                        line.append(responseText);
+                    }
+                    // Expiry
+                    else if(j==5){
                         if(inPast(response[i][5])){
                             votebutton = false;
                             let date = new Date(response[i][5]);
-                            let line = $("<p></p>").text("Das Appointment vom "+date+" ist bereits abgelaufen.");
-                            txt2.append(line);
+                            let expiredLine = $("<p></p>").text("Das Appointment vom "+date+" ist bereits abgelaufen.");
+                            txt2.append(expiredLine);
                             txt.append(txt2);
                             break;
+                        } else {
+                            line.text("Ablaufsdatum: ");
+                            var responseText = $("<span>").text(response[i][j]).addClass("expiry-class");
+                            line.append(responseText);
                         }
-                    } else { //Weitere Infos als Details anzeigen
-                    var line = $("<p></p>").text(response[i][j]);
-                     txt2.append(line);
-                     txt.append(txt2);
                     }
-            }
+                    
+                    // TerminID
+                    else if(j==6){
+                        line.text();
+                    }
+
+                    txt2.append(line);
+                    txt.append(txt2);
+                }
             //wenn es user kommentare usw gibt, diese ausgeben
             userArray = currentUserdata;
-                        if(userArray!=null){
-                            for(let i=0; i<userArray.length;i++){
-                                let name = $("<p></p>").text("Von: "+userArray[i]["name"]);
-                                let comment = $("<p></p>").text("Kommentar: "+userArray[i]["comment"]);
-                                txt2.append(name);
-                                txt2.append(comment);
-                            }
-                        }
+        if(userArray!=null){
+        let userContainer = $("<div></div>").addClass("user-container");
+        for(let i=0; i<userArray.length;i++){
+            let name = $("<span></span>").text(userArray[i]["name"]+ ": ").addClass("name");
+            let comment = $("<span></span>").text(userArray[i]["comment"]).addClass("comment");
+            let div = $("<div></div>").append(name).append(comment);
+            userContainer.append(div);
+        }
+        txt2.append(userContainer);
+        }
+
+            
                     
             if(votebutton){
             //Button anlegen, mit dem man alle Termine anzeigen kann
@@ -122,6 +167,7 @@ function loadAppointments() {
         
     });
 }
+
 
 function getUserInput($id){
     $.ajax({
@@ -159,6 +205,7 @@ function inPast($date){
 
 //Termine zu diesem Appointment anzeigen und Input nehmen
 function vote($title){
+    $(".vote-button").prop("disabled", "true");
     console.log("starting dates vote");
     $("#userResponse").remove();
     //inputfelder wieder leeren
@@ -209,13 +256,90 @@ $(document).on('click', '#closeCreator', function(){
     $("#appointments").show();
     $("#newAppointment").show();
     $("#createAppointment").hide();
+    $("#createbutton").hide();
+    $("#newcreator").hide();
+    $("#createAppointment .datesinput").remove();
+    $('#dateNr').val(''); 
 });
 
-
-
+//Anzahl an Terminen anzeigen, auswählen
+var noDates;
 function makeAppointment(){
-    let noDates = $("#dateNr").val();
+    noDates = $("#dateNr").val();
     $("#dateNr").hide();
+    pickDates(noDates);
+}
+
+function pickDates($noDates){
+    $("#createbutton").hide();
+    let count = $noDates;
+    for(let i=0; i<count;i++){
+        let date = $("<input type='datetime-local'>").addClass("datesinput");
+        date.attr("id", "date"+i);
+        $("#createAppointment").append(date);
+    }
+    //neuer button der dann alles in Datenbank einfügt
+    let newbutton = $("<button></button>").text("Appointment eintragen").addClass("cute-button");
+    newbutton.attr("id", "newcreator");
+    $("#createAppointment").append(newbutton);
+}
+
+//ausgewählte daten speichern in Array
+function insertDates(){ 
+    var insertdates = [null, null, null, null, null];
+    for(let i=0; i<noDates;i++){
+        insertdates[i] = $("#date"+i).val();
+    }
+    $.ajax({
+        type: "GET",
+        url: "../SimpleServer/serviceHandler.php",
+        cache: false,
+        data: {method: "insertDates", param: insertdates},
+        dataType: "json",
+        async: false,
+        success: function(response){
+            console.log(" DIE TERMINID HIER IST: ")
+            console.log(response);
+            dateInsert = response;
+        },
+        error: function(response){
+            console.log(response);
+        }
+    })
+    
+}
+
+//Alle Appointment Daten in der Datenbank speichern
+$(document).on('click', '#newcreator', async function(){
+    console.log("inserting dates into db");
+    insertDates();
+    insertAppointment(dateInsert);
+});
+
+//in die Datenbank schreiben
+function insertAppointment(terminID){
+    var insertAppt = [null, null, null, null, null, null];
+    insertAppt[0] = $("#appTitle").val();
+    insertAppt[1] = $("#appLocation").val();
+    insertAppt[2] = $("#appDescription").val();
+    insertAppt[3] = $("#appDuration").val();
+    insertAppt[4] = $("#appExpiry").val();
+    insertAppt[5] = terminID;
+    console.log(insertAppt);
+    $.ajax({
+        type: "GET",
+        url: "../SimpleServer/serviceHandler.php",
+        cache: false,
+        data: {method: "insertAppointment", param: insertAppt},
+        dataType: "json",
+        async: false,
+        success: function(response){
+            console.log(response);
+        }, 
+        error: function(response){
+            console.log(response);
+        }
+    })
 }
 
 

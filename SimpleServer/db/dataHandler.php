@@ -106,6 +106,57 @@ class DataHandler
         return $result;
     }
 
+    //Termine für erstelltes Appointment in db einfügen, zugehörige TerminID zurückgeben für Relation
+    public function insertDates($dateArray){
+        if($dateArray[0]==null){ //Wenn kein datum eingetragen wurde
+            return null;
+        }
+        $date1 = $dateArray[0];
+        $date2 = $dateArray[1];
+        $date3 = $dateArray[2];
+        $date4 = $dateArray[3];
+        $date5 = $dateArray[4];
+
+        $sql = "INSERT INTO termine (`Date1`, `Date2`, `Date3`, `Date4`, `Date5`) VALUES (?,?,?,?,?)";
+        $stmt = $this->db_obj->prepare($sql); 
+        $stmt->bind_param("sssss", $date1, $date2, $date3, $date4, $date5);
+
+        if($stmt->execute()){
+            $sql1 = "SELECT ID FROM termine WHERE Date1=?";
+            $stmt = $this->db_obj->prepare($sql1); 
+            $stmt->bind_param("s", $date1);
+            $stmt->execute();
+            $terminid = $stmt->get_result()->fetch_assoc()["ID"];
+            return $terminid;
+            
+            } else {
+            return null;
+        }
+
+    }
+
+    function insertAppointment($dataArray){
+        $title = $dataArray[0];
+        $location = $dataArray[1];
+        $description = $dataArray[2];
+        $duration = $dataArray[3];
+        $expiry = $dataArray[4];
+        $termin = $dataArray[5];
+
+        $sql = "INSERT INTO appointment (`Title`, `Location`, `Description`, `Duration`, `Expiry`, `TerminID`) VALUES (?,?,?,?,?,?)";
+        $stmt = $this->db_obj->prepare($sql); 
+        if(!$stmt->bind_param("sssssi", $title, $location, $description, $duration, $expiry, $termin)){
+            var_dump($stmt);   
+        }
+
+        if($stmt->execute()){
+            return "Appointment wurde eingetragen. Die Seite lädt jetzt neu.";
+        } else {
+            var_dump($stmt);  
+            return $stmt->get_result();
+        }
+    }
+
     //TODO: get data from database instead
     private static function getDemoData() 
     {

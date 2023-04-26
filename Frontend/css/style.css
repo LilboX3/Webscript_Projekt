@@ -12,6 +12,10 @@ body {
   color: #fff;
   text-shadow: 2px 2px #ff7faa;
 }
+.location-class, .description-class, .duration-class, .expiry-class {
+  color: #ff7faa;
+  text-shadow: 2px 2px #ffc3cc, 4px 4px #ffc3cc, 6px 6px #ffc3cc;
+}
 /* Heading styles */
 h1 {
   margin-top: 50px;
@@ -22,6 +26,7 @@ h1 {
   color: #ff7faa;
   text-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
 }
+/* Main Container*/
 #appointments-container {
   background-color: #ffc3cc;
   border: 2px solid #ff7faa;
@@ -29,7 +34,19 @@ h1 {
   padding: 20px;
   margin-bottom: 10px;
   box-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
-}/* Main Container*/
+}
+/* Komment Box*/
+.user-container { 
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-size: 20px;
+  color: #ff7faa;  background-color: #fff;
+  border: 2px solid #ff7faa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 2px 2px #d98fb2, 4px 4px #f8c6c7, 6px 6px #fff;
+}
 
 
 /* Appointments styles */
@@ -62,13 +79,12 @@ h3.active-appointment {
   text-shadow: 2px 2px #fff;
 }
 
-/* inside the details*/
+/* Kommentare */
 #appointments details p {
   font-size: 20px;
-  color: #fff;
-  text-shadow: 2px 2px #ff7faa;
+  color: #ff7faa;
+  
 }
-
 /* input feld */
 input {
   margin-bottom:1%;
