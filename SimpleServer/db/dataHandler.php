@@ -60,8 +60,38 @@ class DataHandler
         return $result->fetch_assoc();
     }
 
+    //User Daten in die Datenbank eintragen
     public function writeUser($dateArray){
-        
+        $appTitle = $dateArray[1];
+        $sql1 = "SELECT ID FROM appointment WHERE Title=?";
+        $stmt = $this->db_obj->prepare($sql1); 
+        $stmt->bind_param("s", $appTitle);
+        $stmt->execute();
+        $appID = $stmt->get_result()->fetch_assoc()["ID"];
+
+        $name = $dateArray[2];
+        $comment = $dateArray[3];
+        $sql2 = "INSERT INTO user (`name`, `comment`, `appointmentID`) VALUES (?,?,?)";
+        $statement = $this->db_obj->prepare($sql2); 
+        $statement->bind_param("ssi", $name, $comment, $appID);
+
+        if($statement->execute()){
+            return "Ihre Daten wurden eingetragen.";
+        } else {
+            return null;
+        }
+    }
+
+    //User Daten aus der Datenbank auslesen
+    public function userData($appID){
+        $result = array();
+        $sql = "SELECT TerminID FROM appointment WHERE Title=?";
+        $stmt = $this->db_obj->prepare($sql); 
+        $stmt->bind_param("s", $title);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $terminid = $result->fetch_assoc();
+
     }
 
     //TODO: get data from database instead

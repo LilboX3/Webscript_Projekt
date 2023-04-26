@@ -1,3 +1,5 @@
+var currentdate; //know the dates to save in
+var currentappointment; //the current appointment
 //Starting point for JQuery init
 $(document).ready(function () {
     console.log("doc ready");
@@ -6,10 +8,35 @@ $(document).ready(function () {
 });
 
 $(document).on('click','#insertdata',function(){
+    $("#current").hide();
+    $("#current .checkbox").remove();
+    $("#current p").remove();
+    $("#current .cute-button").remove();
+
+    let input = [currentdate, currentappointment, $("#username").val(), $("#usercomment").val()];
+    console.log(input);
     $.ajax({
-        //TODO: vote 
+        type:"GET",
+        url: "../SimpleServer/serviceHandler.php",
+        cache: false,
+        data: {method: "writeUser", param: input},
+        dataType: "json",
+        success: function(response){
+            console.log(response);
+        },
+        error: function(response){
+            console.log(response);
+        }
     })
 });
+
+$(document).on("click", "#close", function(){
+    $("#current").hide();
+    $("#current .checkbox").remove();
+    $("#current p").remove();
+    $("#current .cute-button").remove();
+
+})
 
 //Test mit Appointments anzeigen
 function loadAppointments() {
@@ -22,6 +49,7 @@ function loadAppointments() {
         dataType: "json",
         success: function (response) {
             console.log(response);
+            let votebutton = true; //wenn abgelaufen: kein button mehr
 
             for(let i=0; i<response.length;i++){
                 var txt2 = $("<details></details>");
@@ -30,6 +58,7 @@ function loadAppointments() {
                         var txt = $("<summary></summary>").text(response[i][j]);
                         $("#appointments ol").append(txt);
                         if(inPast(response[i][5])){
+                            votebutton = false;
                             let date = new Date(response[i][5]);
                             let line = $("<p></p>").text("Das Appointment vom "+date+" ist bereits abgelaufen.");
                             txt2.append(line);
@@ -42,11 +71,13 @@ function loadAppointments() {
                      txt.append(txt2);
                     }
             }
+            if(votebutton){
             //Button anlegen, mit dem man alle Termine anzeigen kann
             var button = $("<button></button>").text("Termin voten");
-                        button.attr("onclick", "vote('"+response[i][0]+"',this)");
+                        button.attr("onclick", "vote('"+response[i][0]+"')");
                         button.addClass("vote-button");
                         $("#appointments ol").append(button).append($("<br>"));
+            }
         }
     },
         error: function(response){
@@ -70,9 +101,10 @@ function inPast($date){
     }
 }
 
-function vote($title, $this){
+function vote($title){
     console.log("starting dates vote");
     $("#current").show();
+
     $.ajax({
         type: "GET",
         url: "../SimpleServer/serviceHandler.php",
@@ -82,11 +114,10 @@ function vote($title, $this){
         success: function(response){
             console.log(response);
 
-            
-            $this.remove();
-
             //Objekt durchgehn und alle Datume anzeigen
             let i = 0;
+            currentdate = response["ID"];
+            currentappointment = $title;
             Object.keys(response).forEach(key => {
                 if(response[key]!=null){ //nur Termine die es gibt auslesen
                 if(key!="ID"){ //ID nicht ausgeben

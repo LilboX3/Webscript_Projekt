@@ -25,6 +25,9 @@ class SimpleLogic
             case "writeUser":
                 $res = $this->dh->writeUser($param);
                 break;
+            case "userData":
+                $res = $this->dh->userData($param);
+                break;
             default:
                 $res = null;
                 break;
