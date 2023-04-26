@@ -230,10 +230,12 @@ function vote($title){
             Object.keys(response).forEach(key => {
                 if(response[key]!=null){ //nur Termine die es gibt auslesen
                 if(key!="ID"){ //ID nicht ausgeben
+                    if(response[key]!="0000-00-00 00:00:00"){
                     let txt = $("<p></p>").text(response[key]);
                     //checkbox, id ist die wievielte Zeile es ist, class ist zu welche ID es gehört
                     let check =  $("<input type='checkbox'/>").addClass("checkbox").appendTo(txt);
-                $("#current").append(txt);
+                    $("#current").append(txt);
+                    }
                 }
                 console.log(key, response[key]);
                 }

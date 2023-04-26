@@ -142,6 +142,9 @@ class DataHandler
         $duration = $dataArray[3];
         $expiry = $dataArray[4];
         $termin = $dataArray[5];
+        if($termin==null){
+            return null;
+        }
 
         $sql = "INSERT INTO appointment (`Title`, `Location`, `Description`, `Duration`, `Expiry`, `TerminID`) VALUES (?,?,?,?,?,?)";
         $stmt = $this->db_obj->prepare($sql); 
